@@ -1,15 +1,6 @@
-# Define a class to install Flask
-class install_flask {
-  
-  # Install pip3 package
-  package { 'python3-pip':
-    ensure => installed,
-  }
+# install puppet-lint -v 2.1.0
 
-  # Install Flask using pip3
-  package { 'Flask':
-    ensure   => '2.1.0',
-    provider => 'pip3',
-    require  => Package['python3-pip'],
-  }
+exec {'puppet-lint':
+ command =>'/usr//bin/apt-get -y
+install puppet-lint -v 2.1.0',
 }
