@@ -1,11 +1,20 @@
-#!/usr/bin/env bash
-# Install nginx on your web-01 server
-# Nginx should be listening on port 80
-# When querying Nginx at its root / with a GET request (requesting a page) 
-# using curl, it must return a page that contains the string Holberton School
+#!/bin/bash
 
-apt-get -y update
-apt-get -y install nginx
-ufw allow 'Nginx HTTP'
-echo 'Hello World!' > /var/www/html/index.html
-service nginx start
+# Update the package list
+apt-get update
+
+# Install Nginx
+apt-get install -y nginx
+
+# Create a simple HTML page with "Hello World!"
+echo "<!DOCTYPE html>" | tee /var/www/html/index.html
+echo "<html>" | tee -a /var/www/html/index.html
+echo "<head><title>Hello World!</title></head>" | tee -a /var/www/html/index.html
+echo "<body><p>Hello World!</p></body>" | tee -a /var/www/html/index.html
+echo "</html>" | tee -a /var/www/html/index.html
+
+# Configure Nginx to listen on port 80
+sed -i 's/\blisten 80;/listen 80 default_server;/g' /etc/nginx/sites-available/default
+
+# Restart Nginx
+service nginx restart
